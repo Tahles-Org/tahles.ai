@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -121,7 +122,23 @@ const SupplierRegisterPage = () => {
             }
           ]);
 
-        if (onboardingError) throw onboardingError;
+        if (onboardingError) {
+          console.error('Onboarding insert error:', onboardingError);
+          // אם יש כבר רשומה, נעדכן אותה
+          const { error: updateError } = await (supabase as any)
+            .from('supplier_onboarding')
+            .update({
+              current_stage: 'identity',
+              verification_data: {
+                contact_name: formData.contactName,
+                phone: formData.phone,
+                email: formData.email
+              }
+            })
+            .eq('supplier_id', authData.user.id);
+
+          if (updateError) throw updateError;
+        }
 
         toast({
           title: "הרשמה הושלמה בהצלחה!",

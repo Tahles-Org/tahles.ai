@@ -5,6 +5,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import SupplierProgressIndicator from '@/components/SupplierProgressIndicator';
 import SupplierIdentityStep from '@/components/SupplierIdentityStep';
+import SupplierBusinessStep from '@/components/SupplierBusinessStep';
+import SupplierDocumentsStep from '@/components/SupplierDocumentsStep';
 
 const SupplierOnboardingPage = () => {
   const { step } = useParams<{ step: string }>();
@@ -85,16 +87,72 @@ const SupplierOnboardingPage = () => {
             user={currentUser}
             onboardingData={onboardingData}
             onStepComplete={() => {
-              // עדכון שלב הבא
               navigate('/supplier/onboarding/business');
             }}
           />
         );
+      case 'business':
+        return (
+          <SupplierBusinessStep 
+            user={currentUser}
+            onboardingData={onboardingData}
+            onStepComplete={() => {
+              navigate('/supplier/onboarding/documents');
+            }}
+          />
+        );
+      case 'documents':
+        return (
+          <SupplierDocumentsStep 
+            user={currentUser}
+            onboardingData={onboardingData}
+            onStepComplete={() => {
+              navigate('/supplier/onboarding/agreements');
+            }}
+          />
+        );
+      case 'agreements':
+        return (
+          <div className="text-center py-20">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">שלב ההסכמים</h2>
+            <p className="text-gray-600 mb-8">השלב נמצא בפיתוח</p>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-md mx-auto">
+              <p className="text-yellow-800">
+                שלב חתימת ההסכמים יושלם בקרוב. 
+                בינתיים ניתן לעבור לשלבים הבאים.
+              </p>
+            </div>
+          </div>
+        );
+      case 'calendar':
+        return (
+          <div className="text-center py-20">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">חיבור יומן</h2>
+            <p className="text-gray-600 mb-8">השלב נמצא בפיתוח</p>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-md mx-auto">
+              <p className="text-yellow-800">
+                שלב חיבור היומן יושלם בקרוב.
+              </p>
+            </div>
+          </div>
+        );
+      case 'first_product':
+        return (
+          <div className="text-center py-20">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">מוצר ראשון</h2>
+            <p className="text-gray-600 mb-8">השלב נמצא בפיתוח</p>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-md mx-auto">
+              <p className="text-yellow-800">
+                שלב הוספת המוצר הראשון יושלם בקרוב.
+              </p>
+            </div>
+          </div>
+        );
       default:
         return (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">שלב בפיתוח</h2>
-            <p className="text-gray-600">השלב "{step}" נמצא בפיתוח</p>
+          <div className="text-center py-20">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">שלב לא מזוהה</h2>
+            <p className="text-gray-600">השלב "{step}" אינו קיים במערכת</p>
           </div>
         );
     }
