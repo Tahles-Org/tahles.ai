@@ -12,9 +12,10 @@ const HeroSection = () => {
   const { data: categories, error, isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const { data } = await supabase.from('categories').select('*');
-      console.log('Categories data from Supabase:', data);
-      return data;
+      const { data: categories } = await supabase.from('categories').select('id, name, icon');
+      console.log('Categories data from Supabase (real-time):', categories);
+      console.log('Total categories found:', categories?.length || 0);
+      return categories;
     },
   });
 
