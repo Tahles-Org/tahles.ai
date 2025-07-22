@@ -29,6 +29,9 @@ const Header = () => {
               />
             </div>
             
+            <Link to="/how-it-works" className="text-muted-foreground hover:text-primary transition-colors">
+              איך זה עובד
+            </Link>
             <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
               צור קשר
             </Link>
@@ -45,9 +48,6 @@ const Header = () => {
           </Button>
           <Button className="bg-orange-500 hover:bg-orange-600" asChild>
             <Link to="/supplier/register">הצטרף כספק</Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link to="/how-it-works">איך זה עובד</Link>
           </Button>
         </div>
       </div>

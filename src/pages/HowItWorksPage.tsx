@@ -14,14 +14,14 @@ const HowItWorksPage = () => {
     },
     {
       icon: Users,
-      title: 'צרו קשר',
-      description: 'פנו ישירות לספקים והזמינו את השירות און-ליין',
+      title: 'בצעו הזמנה',
+      description: 'הזמינו את השירותים הנחוצים לכם, בקלות, במחיר אטרקטיבי, בלי לשבור את הראש ובלי לבזבז זמן יקר',
       details: 'צרו קשר עם הספקים שבחרתם בקליק אחד והזמינו את השירות ישירות דרך הפלטפורמה'
     },
     {
       icon: CheckCircle,
       title: 'קבלו את השירות',
-      description: 'קבלו את השירות באירוע שלכם בביטחון מלא',
+      description: 'נהנים משירות מנצח, ספקים מחייכים והזדמנות מעולה לשנות את אופן הפקת האירועים הבאים שלכם, עם קאשבק חוזר לשימוש באתר - למי שמדרג',
       details: 'כל ההזמנות מובטחות במערכת הגנת הצרכן שלנו עם אפשרות ביטול עד 48 שעות לפני האירוע'
     }
   ];
@@ -52,7 +52,7 @@ const HowItWorksPage = () => {
       <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6">איך זה עובד?</h1>
+            <h1 className="text-4xl lg:text-5xl font-bold mb-6">לקוחות בוחרים תכלס כי...</h1>
             <p className="text-xl mb-8 text-blue-100">
               המדריך המלא לקבלת השירותים הטובים ביותר לאירוע שלכם - מכירה און-ליין לייב
             </p>
@@ -96,27 +96,6 @@ const HowItWorksPage = () => {
                 <p className="text-muted-foreground">{benefit.description}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">שאלות נפוצות</h2>
-          <div className="max-w-3xl mx-auto space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="font-semibold mb-2">כמה זמן לוקח להזמין שירות?</h3>
-              <p className="text-muted-foreground">ההזמנה מתבצעת בזמן אמת. אתם בוחרים ספק, מזמינים ומקבלים אישור מיידי.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="font-semibold mb-2">האם יש עמלות נסתרות?</h3>
-              <p className="text-muted-foreground">לא! כל המחירים שקופים וברורים. אין עמלות נסתרות או תוספות לא צפויות.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="font-semibold mb-2">מה קורה אם הספק מבטל?</h3>
-              <p className="text-muted-foreground">במקרה נדיר של ביטול מצד הספק, אנחנו נמצא לכם חלופה מתאימה או נחזיר את הכסף במלואו.</p>
-            </div>
           </div>
         </div>
       </section>
