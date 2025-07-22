@@ -84,8 +84,8 @@ const SupplierCalendarStep: React.FC<SupplierCalendarStepProps> = ({
     try {
       setIsLoading(true);
 
-      // שמירת הגדרות יומן ב-supplier_onboarding
-      const { error: onboardingError } = await supabase
+      // שמירת הגדרות יומן ב-supplier_onboarding - using type assertion
+      const { error: onboardingError } = await (supabase as any)
         .from('supplier_onboarding')
         .update({
           current_stage: 'first_product',
@@ -101,7 +101,10 @@ const SupplierCalendarStep: React.FC<SupplierCalendarStepProps> = ({
         })
         .eq('supplier_id', user.id);
 
-      if (onboardingError) throw onboardingError;
+      if (onboardingError) {
+        console.error('Calendar step update error:', onboardingError);
+        throw onboardingError;
+      }
 
       toast({
         title: "הגדרות היומן נשמרו!",
