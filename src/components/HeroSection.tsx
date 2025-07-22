@@ -1,37 +1,31 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, GraduationCap, Bus, Ticket, MapPin, UtensilsCrossed, Gift, Video } from 'lucide-react';
-
-const categoryIcons = {
-  'הרצאות והכשרות': GraduationCap,
-  'טיולים ואטרקציות': Bus,
-  'כרטיסים לאירועים': Ticket,
-  'לוקיישנים': MapPin,
-  'מזון ומשקאות': UtensilsCrossed,
-  'מתנות ומוצרים': Gift,
-  'שירותי הפקה': Video,
-};
+import { Search, Folder } from 'lucide-react';
 
 const HeroSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
   
-  const { data: categories } = useQuery({
+  const { data: categories, error, isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('categories')
-        .select('*')
-        .eq('is_active', true)
-        .order('name');
-      
-      if (error) throw error;
+      const { data } = await supabase.from('categories').select('*');
+      console.log('Categories data from Supabase:', data);
       return data;
     },
   });
+
+  useEffect(() => {
+    if (categories) {
+      console.log('Displaying categories:', categories);
+    }
+    if (error) {
+      console.error('Error fetching categories:', error);
+    }
+  }, [categories, error]);
 
   return (
     <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-16 lg:py-24">
@@ -65,22 +59,24 @@ const HeroSection = () => {
 
           {/* Categories Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 max-w-5xl mx-auto">
-            {categories?.map((category) => {
-              const IconComponent = categoryIcons[category.name as keyof typeof categoryIcons] || MapPin;
-              
-              return (
+            {isLoading ? (
+              <div className="col-span-full text-center">טוען קטגוריות...</div>
+            ) : !categories || categories.length === 0 ? (
+              <div className="col-span-full text-center">אין קטגוריות זמינות כרגע</div>
+            ) : (
+              categories.map((category) => (
                 <a 
                   href={`/category/${encodeURIComponent(category.name)}`}
                   key={category.id} 
                   className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer"
                 >
                   <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <IconComponent className="w-4 h-4 text-white" />
+                    <Folder className="w-4 h-4 text-white" />
                   </div>
                   <p className="text-xs text-white font-medium">{category.name}</p>
                 </a>
-              );
-            })}
+              ))
+            )}
           </div>
         </div>
       </div>
