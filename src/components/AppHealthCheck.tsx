@@ -48,8 +48,7 @@ const AppHealthCheck = () => {
       location: window.location.href,
       userAgent: navigator.userAgent,
       timestamp: new Date().toISOString(),
-      reactVersion: React.version,
-      supabaseUrl: supabase.supabaseUrl
+      reactVersion: React.version
     });
   }, []);
 
