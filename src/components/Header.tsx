@@ -19,10 +19,6 @@ const Header = () => {
         {/* Navigation & Search */}
         <div className="flex items-center gap-6">
           <nav className="hidden md:flex items-center gap-6">
-            <a href="/" className="text-muted-foreground hover:text-primary transition-colors">
-              בית
-            </a>
-            
             {/* Search */}
             <div className="relative">
               <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -44,8 +40,8 @@ const Header = () => {
 
         {/* CTA Buttons */}
         <div className="flex items-center gap-3">
-          <Button variant="ghost" className="hidden sm:inline-flex">
-            הרשמה/התחברות
+          <Button variant="ghost" className="hidden sm:inline-flex" asChild>
+            <a href="/auth">הרשמה/התחברות</a>
           </Button>
           <Button className="bg-orange-500 hover:bg-orange-600">
             הצטרף כספק
