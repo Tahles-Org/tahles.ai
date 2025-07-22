@@ -3,6 +3,8 @@ import React from 'react';
 import { Search, Users, CheckCircle } from 'lucide-react';
 
 const HowItWorks = () => {
+  console.log('💡 HowItWorks component rendering');
+  
   const steps = [
     {
       icon: Search,
@@ -21,20 +23,28 @@ const HowItWorks = () => {
     }
   ];
 
+  React.useEffect(() => {
+    console.log('✅ HowItWorks component mounted');
+  }, []);
+
   return (
     <section className="py-16 bg-blue-50">
+      {console.log('🎨 HowItWorks JSX rendering')}
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">איך זה עובד?</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">לקוחות בוחרים תכלס כי...</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
-            <div key={index} className="text-center">
-              <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <step.icon className="w-10 h-10 text-white" />
+          {steps.map((step, index) => {
+            console.log(`📋 Rendering step ${index + 1}:`, step.title);
+            return (
+              <div key={index} className="text-center">
+                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <step.icon className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
-              <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
