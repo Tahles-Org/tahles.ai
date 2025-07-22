@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, Clock, MapPin } from 'lucide-react';
+import { Star, MapPin } from 'lucide-react';
 
 const CategorySliders = () => {
-  // Mock data for suppliers
+  // Mock data for suppliers with real Unsplash images
   const topSuppliers = [
     {
       id: 1,
@@ -13,8 +14,7 @@ const CategorySliders = () => {
       rating: 4.9,
       reviews: 127,
       price: "מ-2,500 ₪",
-      image: "/placeholder.svg",
-      responseTime: "תוך שעה",
+      image: "https://images.unsplash.com/photo-1606918801925-e2c914c4b503?w=400",
       location: "תל אביב"
     },
     {
@@ -24,8 +24,7 @@ const CategorySliders = () => {
       rating: 4.8,
       reviews: 89,
       price: "מ-1,800 ₪", 
-      image: "/placeholder.svg",
-      responseTime: "תוך 30 דקות",
+      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
       location: "ירושלים"
     },
     {
@@ -35,8 +34,7 @@ const CategorySliders = () => {
       rating: 4.7,
       reviews: 203,
       price: "מ-15,000 ₪",
-      image: "/placeholder.svg", 
-      responseTime: "תוך יום",
+      image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=400", 
       location: "רמת גן"
     }
   ];
@@ -48,7 +46,7 @@ const CategorySliders = () => {
       description: "פתרון מלא לחתונה - צילום, DJ ואולם",
       originalPrice: "45,000 ₪",
       discountPrice: "38,000 ₪",
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400",
       savings: "7,000 ₪ חיסכון"
     },
     {
@@ -57,7 +55,7 @@ const CategorySliders = () => {
       description: "כל מה שצריך לבר מצווה מושלם",
       originalPrice: "25,000 ₪", 
       discountPrice: "21,000 ₪",
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=400",
       savings: "4,000 ₪ חיסכון"
     }
   ];
@@ -69,7 +67,7 @@ const CategorySliders = () => {
       category: "צילום אווירי",
       badge: "חדש",
       price: "מ-800 ₪",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=400"
     },
     {
       id: 2,
@@ -77,7 +75,7 @@ const CategorySliders = () => {
       category: "תאורה ואפקטים",
       badge: "פופולרי",
       price: "מ-1,200 ₪",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1518877593221-1f28583780b4?w=400"
     }
   ];
 
@@ -105,15 +103,9 @@ const CategorySliders = () => {
                 <p className="font-bold text-orange-600">{supplier.price}</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                <span>{supplier.responseTime}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <MapPin className="w-4 h-4" />
-                <span>{supplier.location}</span>
-              </div>
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <MapPin className="w-4 h-4" />
+              <span>{supplier.location}</span>
             </div>
           </div>
         </div>
@@ -167,12 +159,12 @@ const CategorySliders = () => {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Top Suppliers */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-4 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">הספקים המדורגים השבוע</h2>
-          <div className="flex gap-6 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <h2 className="text-3xl font-bold text-center mb-6">הספקים המדורגים השבוע</h2>
+          <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {topSuppliers.map((supplier) => (
               <SupplierCard key={supplier.id} supplier={supplier} />
             ))}
@@ -181,10 +173,10 @@ const CategorySliders = () => {
       </section>
 
       {/* Our Recommendations */}
-      <section className="py-8">
+      <section className="py-4">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">ההמלצות שלנו</h2>
-          <div className="flex gap-6 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <h2 className="text-3xl font-bold text-center mb-6">ההמלצות שלנו</h2>
+          <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {ourRecommendations.map((item) => (
               <RecommendationCard key={item.id} item={item} />
             ))}
@@ -193,10 +185,10 @@ const CategorySliders = () => {
       </section>
 
       {/* New in System */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-4 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">חדש במערכת תכלס</h2>
-          <div className="flex gap-6 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <h2 className="text-3xl font-bold text-center mb-6">חדש במערכת תכלס</h2>
+          <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {newInSystem.map((item) => (
               <NewItemCard key={item.id} item={item} />
             ))}

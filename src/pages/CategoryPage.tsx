@@ -1,222 +1,196 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Star, MapPin, Clock, Users, Mic, Music, Drama, Gift, Users2, PartyPopper, Clapperboard, Gamepad2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+
+interface Category {
+  id: string;
+  name: string;
+  icon: string;
+}
+
+interface Subcategory {
+  id: string;
+  name: string;
+  icon: string;
+}
 
 const CategoryPage = () => {
   const { categoryName } = useParams();
-  const [activeFilter, setActiveFilter] = useState('שעירה יציאה');
+  const navigate = useNavigate();
 
-  // Subcategories based on the reference image
-  const subcategories = [
-    { id: 1, name: 'זמרים', icon: Mic, count: 47 },
-    { id: 2, name: 'זגים', icon: Users2, count: 23 },
-    { id: 3, name: 'ליקנוט', icon: Music, count: 31 },
-    { id: 4, name: 'סטנדאפיסטים', icon: Drama, count: 18 },
-    { id: 5, name: 'שחקנים', icon: Clapperboard, count: 29 },
-    { id: 6, name: 'אמני חושים', icon: Gift, count: 15 },
-    { id: 7, name: 'תיאטרון', icon: Drama, count: 12 },
-    { id: 8, name: 'קרקס', icon: PartyPopper, count: 8 },
-    { id: 9, name: 'מיצגים', icon: Users, count: 21 },
-    { id: 10, name: 'תקליטנים', icon: Music, count: 56 },
-    { id: 11, name: 'קריוקי', icon: Mic, count: 19 },
-    { id: 12, name: 'קוסמים', icon: Gamepad2, count: 34 }
-  ];
-
-  const filters = ['שעירה יציאה', 'מחאות'];
-
-  // Mock suppliers data
-  const suppliers = [
-    {
-      id: 1,
-      name: "אלי כהן - זמר",
-      category: "זמרים",
-      rating: 4.9,
-      reviews: 89,
-      location: "תל אביב",
-      responseTime: "תוך שעה",
-      price: "מ-3,500 ₪",
-      image: "/placeholder.svg",
-      verified: true
+  // First, get the category by ID (or name for backward compatibility)
+  const { data: category, isLoading: categoryLoading } = useQuery({
+    queryKey: ['category', categoryName],
+    queryFn: async () => {
+      console.log('Fetching category for:', categoryName);
+      
+      // Try to fetch by ID first, then by name for backward compatibility
+      let query = supabase
+        .from('categories')
+        .select('id, name, icon')
+        .eq('is_active', true);
+      
+      // Check if categoryName is a UUID (has dashes and correct length)
+      const isUUID = categoryName && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(categoryName);
+      
+      if (isUUID) {
+        query = query.eq('id', categoryName);
+      } else {
+        query = query.eq('name', decodeURIComponent(categoryName || ''));
+      }
+      
+      const { data, error } = await query.single();
+      
+      if (error) {
+        console.error('Error fetching category:', error);
+        throw error;
+      }
+      
+      console.log('Found category:', data);
+      return data as Category;
     },
-    {
-      id: 2, 
-      name: "להקת הרוח",
-      category: "זגים",
-      rating: 4.8,
-      reviews: 127,
-      location: "ירושלים", 
-      responseTime: "תוך 2 שעות",
-      price: "מ-5,000 ₪",
-      image: "/placeholder.svg",
-      verified: true
+    enabled: !!categoryName
+  });
+
+  // Then get subcategories for this category
+  const { data: subcategories, isLoading: subcategoriesLoading, error: subcategoriesError } = useQuery({
+    queryKey: ['subcategories', category?.id],
+    queryFn: async () => {
+      if (!category?.id) return [];
+      
+      console.log('Fetching subcategories for category ID:', category.id);
+      
+      const { data, error } = await supabase
+        .from('subcategories')
+        .select('id, name, icon')
+        .eq('category_id', category.id)
+        .eq('is_active', true);
+      
+      if (error) {
+        console.error('Error fetching subcategories:', error);
+        throw error;
+      }
+      
+      console.log('Found subcategories:', data);
+      return data as Subcategory[];
     },
-    {
-      id: 3,
-      name: "DJ פרו",
-      category: "תקליטנים",
-      rating: 4.7,
-      reviews: 203,
-      location: "חיפה",
-      responseTime: "תוך יום",
-      price: "מ-2,800 ₪", 
-      image: "/placeholder.svg",
-      verified: false
-    }
-  ];
+    enabled: !!category?.id
+  });
+
+  const handleBackToHome = () => {
+    navigate('/');
+  };
+
+  const handleSubcategoryClick = (subcategoryId: string) => {
+    navigate(`/subcategory/${subcategoryId}`);
+  };
+
+  if (categoryLoading) {
+    return (
+      <div className="min-h-screen bg-background" dir="rtl">
+        <Header />
+        <main className="container mx-auto px-4 py-16">
+          <div className="text-center">טוען פרטי קטגוריה...</div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!category) {
+    return (
+      <div className="min-h-screen bg-background" dir="rtl">
+        <Header />
+        <main className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">קטגוריה לא נמצאה</h1>
+            <Button onClick={handleBackToHome}>
+              <ArrowRight className="w-4 h-4 ml-2" />
+              חזרה לעמוד הבית
+            </Button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background" dir="rtl">
       <Header />
-      
-      <main>
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center max-w-4xl mx-auto">
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-                מה המופע המבוקש?
-              </h1>
-              <p className="text-xl text-blue-100 mb-8">
-                לורם איפסום דולור סיט אמט, קונסקטורור אדיפיסינג אליט לורם איפסום דולור סיט אמט, אמת.
-              </p>
-              
-              {/* Filters */}
-              <div className="flex justify-center gap-4 mb-8">
-                {filters.map((filter) => (
-                  <Button
-                    key={filter}
-                    variant={activeFilter === filter ? "default" : "outline"}
-                    className={`${
-                      activeFilter === filter 
-                        ? "bg-white text-blue-900 hover:bg-gray-100" 
-                        : "border-white text-white hover:bg-white/10"
-                    }`}
-                    onClick={() => setActiveFilter(filter)}
-                  >
-                    {filter}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+      <main className="container mx-auto px-4 py-8">
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-2 mb-6 text-sm text-muted-foreground">
+          <button onClick={handleBackToHome} className="hover:text-primary">
+            עמוד הבית
+          </button>
+          <span>/</span>
+          <span className="text-foreground">{category.name}</span>
+        </div>
 
-        {/* Subcategories Grid */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              {subcategories.map((subcategory) => {
-                const IconComponent = subcategory.icon;
-                
-                return (
+        {/* Category Header */}
+        <div className="text-center mb-12">
+          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-3xl">{category.icon}</span>
+          </div>
+          <h1 className="text-4xl font-bold mb-4">{category.name}</h1>
+          <p className="text-lg text-muted-foreground">
+            בחר תת קטגוריה כדי לראות ספקים זמינים
+          </p>
+        </div>
+
+        {/* Subcategories */}
+        <div className="max-w-4xl mx-auto">
+          {subcategoriesLoading ? (
+            <div className="text-center py-8">טוען תתי קטגוריות...</div>
+          ) : subcategoriesError ? (
+            <div className="text-center py-8 text-red-600">
+              שגיאה בטעינת תתי קטגוריות
+            </div>
+          ) : !subcategories || subcategories.length === 0 ? (
+            <div className="text-center py-8">
+              <h3 className="text-xl font-semibold mb-2">לא קיימות תתי קטגוריות פעילות לקטגוריה זו</h3>
+              <p className="text-muted-foreground mb-4">בקרוב נוסיף תתי קטגוריות לקטגוריה זו</p>
+              <Button onClick={handleBackToHome}>
+                <ArrowRight className="w-4 h-4 ml-2" />
+                חזרה לעמוד הבית
+              </Button>
+            </div>
+          ) : (
+            <>
+              <h2 className="text-2xl font-bold text-center mb-8">תתי קטגוריות</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {subcategories.map((subcategory) => (
                   <Card 
                     key={subcategory.id}
-                    className="hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 bg-white"
+                    className="hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105"
+                    onClick={() => handleSubcategoryClick(subcategory.id)}
                   >
                     <CardContent className="p-6 text-center">
-                      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <IconComponent className="w-8 h-8 text-blue-600" />
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-2xl">
+                          {subcategory.icon || '📁'}
+                        </span>
                       </div>
                       <h3 className="font-semibold text-lg mb-2">{subcategory.name}</h3>
                       <p className="text-sm text-muted-foreground">
-                        {subcategory.count} ספקים זמינים
+                        לחץ לצפייה בספקים זמינים
                       </p>
                     </CardContent>
                   </Card>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Suppliers */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">הספקים המובילים בקטגוריה</h2>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {suppliers.map((supplier) => (
-                <Card key={supplier.id} className="hover:shadow-lg transition-all duration-300 cursor-pointer">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4 mb-4">
-                      <img 
-                        src={supplier.image} 
-                        alt={supplier.name}
-                        className="w-16 h-16 rounded-full object-cover"
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <h3 className="font-semibold text-lg flex items-center gap-2">
-                              {supplier.name}
-                              {supplier.verified && (
-                                <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
-                                  מאומת
-                                </Badge>
-                              )}
-                            </h3>
-                            <p className="text-sm text-muted-foreground">{supplier.category}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center gap-1 mb-2">
-                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                          <span className="font-semibold text-sm">{supplier.rating}</span>
-                          <span className="text-sm text-muted-foreground">({supplier.reviews} ביקורות)</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center justify-between text-sm">
-                        <div className="flex items-center gap-1 text-muted-foreground">
-                          <MapPin className="w-4 h-4" />
-                          <span>{supplier.location}</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-muted-foreground">
-                          <Clock className="w-4 h-4" />
-                          <span>{supplier.responseTime}</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-lg text-orange-600">{supplier.price}</span>
-                      <Button size="sm" className="bg-orange-500 hover:bg-orange-600">
-                        צור קשר
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Bottom CTA */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-4">לא מצאתם מה שחיפשתם?</h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              דברו איתנו ונעזור לכם למצוא את הספק המושלם לאירוע שלכם
-            </p>
-            <div className="flex gap-4 justify-center">
-              <Button size="lg" className="bg-orange-500 hover:bg-orange-600">
-                צרו קשר
-              </Button>
-              <Button size="lg" variant="outline">
-                חזרה לעמוד הראשי
-              </Button>
-            </div>
-          </div>
-        </section>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       </main>
-      
       <Footer />
     </div>
   );
