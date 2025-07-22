@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
@@ -113,8 +114,8 @@ const HeroSection = () => {
               categories.slice(0, 16).map((category) => {
                 console.log('🏷️ Rendering category:', category.name);
                 return (
-                  <a 
-                    href={`/category/${category.id}`}
+                  <Link 
+                    to={`/category/${category.id}`}
                     key={category.id} 
                     className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer"
                   >
@@ -122,7 +123,7 @@ const HeroSection = () => {
                       <span className="text-lg">{category.icon}</span>
                     </div>
                     <p className="text-xs text-white font-medium">{category.name}</p>
-                  </a>
+                  </Link>
                 );
               })
             )}
