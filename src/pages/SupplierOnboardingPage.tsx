@@ -1,12 +1,16 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import { CheckCircle } from 'lucide-react';
 import SupplierProgressIndicator from '@/components/SupplierProgressIndicator';
 import SupplierIdentityStep from '@/components/SupplierIdentityStep';
 import SupplierBusinessStep from '@/components/SupplierBusinessStep';
 import SupplierDocumentsStep from '@/components/SupplierDocumentsStep';
+import SupplierAgreementsStep from '@/components/SupplierAgreementsStep';
+import SupplierCalendarStep from '@/components/SupplierCalendarStep';
+import SupplierFirstProductStep from '@/components/SupplierFirstProductStep';
 
 const SupplierOnboardingPage = () => {
   const { step } = useParams<{ step: string }>();
@@ -113,38 +117,58 @@ const SupplierOnboardingPage = () => {
         );
       case 'agreements':
         return (
-          <div className="text-center py-20">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">שלב ההסכמים</h2>
-            <p className="text-gray-600 mb-8">השלב נמצא בפיתוח</p>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-yellow-800">
-                שלב חתימת ההסכמים יושלם בקרוב. 
-                בינתיים ניתן לעבור לשלבים הבאים.
-              </p>
-            </div>
-          </div>
+          <SupplierAgreementsStep 
+            user={currentUser}
+            onboardingData={onboardingData}
+            onStepComplete={() => {
+              navigate('/supplier/onboarding/calendar');
+            }}
+          />
         );
       case 'calendar':
         return (
-          <div className="text-center py-20">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">חיבור יומן</h2>
-            <p className="text-gray-600 mb-8">השלב נמצא בפיתוח</p>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-yellow-800">
-                שלב חיבור היומן יושלם בקרוב.
-              </p>
-            </div>
-          </div>
+          <SupplierCalendarStep 
+            user={currentUser}
+            onboardingData={onboardingData}
+            onStepComplete={() => {
+              navigate('/supplier/onboarding/first_product');
+            }}
+          />
         );
       case 'first_product':
         return (
+          <SupplierFirstProductStep 
+            user={currentUser}
+            onboardingData={onboardingData}
+            onStepComplete={() => {
+              navigate('/supplier/dashboard'); // נוביל לדשבורד הספק
+            }}
+          />
+        );
+      case 'completed':
+        return (
           <div className="text-center py-20">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">מוצר ראשון</h2>
-            <p className="text-gray-600 mb-8">השלב נמצא בפיתוח</p>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-yellow-800">
-                שלב הוספת המוצר הראשון יושלם בקרוב.
+            <div className="max-w-md mx-auto">
+              <CheckCircle className="h-20 w-20 text-green-600 mx-auto mb-6" />
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">ברוכים הבאים!</h2>
+              <p className="text-gray-600 mb-8">
+                תהליך הרישום הושלם בהצלחה. אתם עכשיו חלק מהפלטפורמה שלנו.
               </p>
+              <div className="space-y-4">
+                <Button 
+                  onClick={() => navigate('/supplier/dashboard')}
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600"
+                >
+                  עבור לדשבורד שלי
+                </Button>
+                <Button 
+                  onClick={() => navigate('/')}
+                  variant="outline"
+                  className="w-full"
+                >
+                  חזור לעמוד הבית
+                </Button>
+              </div>
             </div>
           </div>
         );
@@ -153,6 +177,12 @@ const SupplierOnboardingPage = () => {
           <div className="text-center py-20">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">שלב לא מזוהה</h2>
             <p className="text-gray-600">השלב "{step}" אינו קיים במערכת</p>
+            <Button 
+              onClick={() => navigate('/supplier/onboarding/identity')}
+              className="mt-4"
+            >
+              חזור לתחילת התהליך
+            </Button>
           </div>
         );
     }
