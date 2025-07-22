@@ -39,19 +39,19 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
-            פתרונות הזמנה במרחק לחיצה
+            פתרונות הפקה במרחק לחיצה
           </h1>
           <p className="text-xl lg:text-2xl mb-8 text-blue-100">
-            מוצאים לכם את הספקים הטובים ביותר לכל אירוע
+            הספקים המובילים לכל אירוע - במחיר מנצח והזמנה מיידית
           </p>
           
-          {/* Search Bar */}
+          {/* Advanced Search */}
           <div className="max-w-2xl mx-auto mb-8">
             <div className="relative">
               <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
               <Input
                 type="text"
-                placeholder="מה אתם מחפשים? (צלם, DJ, אולם...)"
+                placeholder="חיפוש מונחה - ספקים, שירותים, מחירים ועוד..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full h-14 pr-12 text-lg bg-white text-black"
@@ -60,7 +60,7 @@ const HeroSection = () => {
           </div>
 
           <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-lg px-8 py-3 mb-8">
-            התחל לחפש
+            חיפוש מתקדם
           </Button>
 
           {/* Categories Cards */}
@@ -69,7 +69,8 @@ const HeroSection = () => {
               const IconComponent = categoryIcons[category.name as keyof typeof categoryIcons] || MapPin;
               
               return (
-                <div 
+                <a 
+                  href={`/category/${encodeURIComponent(category.name)}`}
                   key={category.id} 
                   className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer"
                 >
@@ -77,7 +78,7 @@ const HeroSection = () => {
                     <IconComponent className="w-4 h-4 text-white" />
                   </div>
                   <p className="text-xs text-white font-medium">{category.name}</p>
-                </div>
+                </a>
               );
             })}
           </div>

@@ -12,30 +12,34 @@ const Header = () => {
         {/* Logo */}
         <div className="flex items-center">
           <a href="/" className="flex items-center">
-            <h1 className="text-2xl font-bold text-primary">תחלים</h1>
+            <h1 className="text-2xl font-bold text-primary">תכלס</h1>
           </a>
         </div>
 
         {/* Navigation & Search */}
         <div className="flex items-center gap-6">
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="/" className="text-muted-foreground hover:text-primary transition-colors">
+              בית
+            </a>
+            
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                type="text"
+                placeholder="חיפוש ספקים, מוצרים, קטגוריות..."
+                className="w-64 pr-10 h-9"
+              />
+            </div>
+            
+            <a href="#how-it-works" className="text-muted-foreground hover:text-primary transition-colors">
               איך זה עובד
             </a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">
               צור קשר
             </a>
           </nav>
-          
-          {/* Search Button */}
-          <div className="relative">
-            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              type="text"
-              placeholder="חיפוש..."
-              className="w-48 pr-10 h-9"
-            />
-          </div>
         </div>
 
         {/* CTA Buttons */}
