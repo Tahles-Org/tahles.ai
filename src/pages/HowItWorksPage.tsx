@@ -15,13 +15,13 @@ const HowItWorksPage = () => {
     {
       icon: Users,
       title: 'צרו קשר',
-      description: 'פנו ישירות לספקים וקבלו הצעות מחיר מותאמות',
-      details: 'צרו קשר עם הספקים שבחרתם בקליק אחד וקבלו הצעות מחיר מפורטות תוך 24 שעות'
+      description: 'פנו ישירות לספקים והזמינו את השירות און-ליין',
+      details: 'צרו קשר עם הספקים שבחרתם בקליק אחד והזמינו את השירות ישירות דרך הפלטפורמה'
     },
     {
       icon: CheckCircle,
-      title: 'הזמינו בביטחון',
-      description: 'סגרו את העסקה בביטחון מלא עם ערבות להחזר כספי',
+      title: 'קבלו את השירות',
+      description: 'קבלו את השירות באירוע שלכם בביטחון מלא',
       details: 'כל ההזמנות מובטחות במערכת הגנת הצרכן שלנו עם אפשרות ביטול עד 48 שעות לפני האירוע'
     }
   ];
@@ -54,7 +54,7 @@ const HowItWorksPage = () => {
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">איך זה עובד?</h1>
             <p className="text-xl mb-8 text-blue-100">
-              המדריך המלא לקבלת השירותים הטובים ביותר לאירוע שלכם
+              המדריך המלא לקבלת השירותים הטובים ביותר לאירוע שלכם - מכירה און-ליין לייב
             </p>
           </div>
         </div>
@@ -106,8 +106,8 @@ const HowItWorksPage = () => {
           <h2 className="text-3xl font-bold text-center mb-12">שאלות נפוצות</h2>
           <div className="max-w-3xl mx-auto space-y-6">
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="font-semibold mb-2">כמה זמן לוקח לקבל הצעת מחיר?</h3>
-              <p className="text-muted-foreground">רוב הספקים מגיבים תוך 24 שעות. ספקים מובילים עונים תוך מספר שעות.</p>
+              <h3 className="font-semibold mb-2">כמה זמן לוקח להזמין שירות?</h3>
+              <p className="text-muted-foreground">ההזמנה מתבצעת בזמן אמת. אתם בוחרים ספק, מזמינים ומקבלים אישור מיידי.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="font-semibold mb-2">האם יש עמלות נסתרות?</h3>
