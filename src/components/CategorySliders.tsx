@@ -167,11 +167,11 @@ const CategorySliders = () => {
   );
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8">
       {/* Top Suppliers */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">הספקים המדורגים השבוע</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">הספקים המדורגים השבוע</h2>
           <div className="flex gap-6 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {topSuppliers.map((supplier) => (
               <SupplierCard key={supplier.id} supplier={supplier} />
@@ -181,9 +181,9 @@ const CategorySliders = () => {
       </section>
 
       {/* Our Recommendations */}
-      <section className="py-16">
+      <section className="py-8">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">ההמלצות שלנו</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">ההמלצות שלנו</h2>
           <div className="flex gap-6 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {ourRecommendations.map((item) => (
               <RecommendationCard key={item.id} item={item} />
@@ -193,9 +193,9 @@ const CategorySliders = () => {
       </section>
 
       {/* New in System */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">חדש במערכת תכלס</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">חדש במערכת תכלס</h2>
           <div className="flex gap-6 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {newInSystem.map((item) => (
               <NewItemCard key={item.id} item={item} />

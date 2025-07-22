@@ -11,7 +11,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background" dir="rtl">
       <Header />
-      <main>
+      <main className="space-y-8">
         <HeroSection />
         <CategorySliders />
         <HowItWorks />
