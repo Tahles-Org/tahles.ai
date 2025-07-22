@@ -21,6 +21,7 @@ export type Database = {
           id: string
           is_active: boolean | null
           name: string
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
@@ -28,6 +29,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name: string
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
@@ -35,6 +37,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -47,6 +50,7 @@ export type Database = {
           is_used: boolean | null
           pending_data: Json | null
           supplier_id: string | null
+          updated_at: string | null
           verification_code: string
           verification_type: string
         }
@@ -58,6 +62,7 @@ export type Database = {
           is_used?: boolean | null
           pending_data?: Json | null
           supplier_id?: string | null
+          updated_at?: string | null
           verification_code: string
           verification_type: string
         }
@@ -69,6 +74,7 @@ export type Database = {
           is_used?: boolean | null
           pending_data?: Json | null
           supplier_id?: string | null
+          updated_at?: string | null
           verification_code?: string
           verification_type?: string
         }
@@ -89,6 +95,7 @@ export type Database = {
           id: string
           is_active: boolean | null
           name: string
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
@@ -96,6 +103,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name: string
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
@@ -103,6 +111,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -117,6 +126,7 @@ export type Database = {
           label: string | null
           test_field_x: string | null
           type: string | null
+          updated_at: string | null
         }
         Insert: {
           category: string
@@ -128,6 +138,7 @@ export type Database = {
           label?: string | null
           test_field_x?: string | null
           type?: string | null
+          updated_at?: string | null
         }
         Update: {
           category?: string
@@ -139,6 +150,7 @@ export type Database = {
           label?: string | null
           test_field_x?: string | null
           type?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -149,6 +161,7 @@ export type Database = {
           is_active: boolean | null
           name: string
           type: string
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
@@ -156,6 +169,7 @@ export type Database = {
           is_active?: boolean | null
           name: string
           type: string
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
@@ -163,6 +177,7 @@ export type Database = {
           is_active?: boolean | null
           name?: string
           type?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -170,32 +185,41 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          updated_at: string | null
         }
         Insert: {
           created_at?: string
           id?: number
+          updated_at?: string | null
         }
         Update: {
           created_at?: string
           id?: number
+          updated_at?: string | null
         }
         Relationships: []
       }
       images: {
         Row: {
+          created_at: string | null
           id: string
           image_url: string
           product_id: string | null
+          updated_at: string | null
         }
         Insert: {
+          created_at?: string | null
           id?: string
           image_url: string
           product_id?: string | null
+          updated_at?: string | null
         }
         Update: {
+          created_at?: string | null
           id?: string
           image_url?: string
           product_id?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -218,6 +242,7 @@ export type Database = {
           quantity: number
           status: string | null
           total_price: number
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
@@ -229,6 +254,7 @@ export type Database = {
           quantity?: number
           status?: string | null
           total_price: number
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
@@ -240,6 +266,7 @@ export type Database = {
           quantity?: number
           status?: string | null
           total_price?: number
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -253,23 +280,29 @@ export type Database = {
       }
       product_variants: {
         Row: {
+          created_at: string | null
           id: string
           price: number
           product_id: string | null
+          updated_at: string | null
           variant_name: string
           variant_value: string
         }
         Insert: {
+          created_at?: string | null
           id?: string
           price: number
           product_id?: string | null
+          updated_at?: string | null
           variant_name: string
           variant_value: string
         }
         Update: {
+          created_at?: string | null
           id?: string
           price?: number
           product_id?: string | null
+          updated_at?: string | null
           variant_name?: string
           variant_value?: string
         }
@@ -293,6 +326,7 @@ export type Database = {
           name: string
           subcategory_id: string | null
           supplier_id: string | null
+          updated_at: string | null
           video_url: string | null
         }
         Insert: {
@@ -304,6 +338,7 @@ export type Database = {
           name: string
           subcategory_id?: string | null
           supplier_id?: string | null
+          updated_at?: string | null
           video_url?: string | null
         }
         Update: {
@@ -315,6 +350,7 @@ export type Database = {
           name?: string
           subcategory_id?: string | null
           supplier_id?: string | null
+          updated_at?: string | null
           video_url?: string | null
         }
         Relationships: [
@@ -336,6 +372,7 @@ export type Database = {
       }
       provider_availability_slots: {
         Row: {
+          created_at: string | null
           current_bookings: number | null
           date: string | null
           end_time: string | null
@@ -344,8 +381,10 @@ export type Database = {
           max_concurrent_bookings: number | null
           service_id: string | null
           start_time: string | null
+          updated_at: string | null
         }
         Insert: {
+          created_at?: string | null
           current_bookings?: number | null
           date?: string | null
           end_time?: string | null
@@ -354,8 +393,10 @@ export type Database = {
           max_concurrent_bookings?: number | null
           service_id?: string | null
           start_time?: string | null
+          updated_at?: string | null
         }
         Update: {
+          created_at?: string | null
           current_bookings?: number | null
           date?: string | null
           end_time?: string | null
@@ -364,6 +405,7 @@ export type Database = {
           max_concurrent_bookings?: number | null
           service_id?: string | null
           start_time?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -379,20 +421,26 @@ export type Database = {
         Row: {
           calendar_active: boolean | null
           calendar_connected: boolean | null
+          created_at: string | null
           id: string
           name: string | null
+          updated_at: string | null
         }
         Insert: {
           calendar_active?: boolean | null
           calendar_connected?: boolean | null
+          created_at?: string | null
           id?: string
           name?: string | null
+          updated_at?: string | null
         }
         Update: {
           calendar_active?: boolean | null
           calendar_connected?: boolean | null
+          created_at?: string | null
           id?: string
           name?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -449,6 +497,7 @@ export type Database = {
       services: {
         Row: {
           base_price: number | null
+          created_at: string | null
           has_calendar_integration: boolean | null
           id: string
           is_visible: boolean | null
@@ -457,9 +506,11 @@ export type Database = {
           service_areas: string[] | null
           setup_time_minutes: number | null
           teardown_time_minutes: number | null
+          updated_at: string | null
         }
         Insert: {
           base_price?: number | null
+          created_at?: string | null
           has_calendar_integration?: boolean | null
           id?: string
           is_visible?: boolean | null
@@ -468,9 +519,11 @@ export type Database = {
           service_areas?: string[] | null
           setup_time_minutes?: number | null
           teardown_time_minutes?: number | null
+          updated_at?: string | null
         }
         Update: {
           base_price?: number | null
+          created_at?: string | null
           has_calendar_integration?: boolean | null
           id?: string
           is_visible?: boolean | null
@@ -479,6 +532,7 @@ export type Database = {
           service_areas?: string[] | null
           setup_time_minutes?: number | null
           teardown_time_minutes?: number | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -498,6 +552,7 @@ export type Database = {
           id: string
           is_active: boolean | null
           name: string
+          updated_at: string | null
         }
         Insert: {
           category_id?: string | null
@@ -506,6 +561,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name: string
+          updated_at?: string | null
         }
         Update: {
           category_id?: string | null
@@ -514,6 +570,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -538,6 +595,7 @@ export type Database = {
           options: string[] | null
           priority: number | null
           subcategory_id: string | null
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
@@ -551,6 +609,7 @@ export type Database = {
           options?: string[] | null
           priority?: number | null
           subcategory_id?: string | null
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
@@ -564,6 +623,7 @@ export type Database = {
           options?: string[] | null
           priority?: number | null
           subcategory_id?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -582,6 +642,7 @@ export type Database = {
           id: string
           is_active: boolean | null
           name: string
+          updated_at: string | null
         }
         Insert: {
           concept_id?: string | null
@@ -589,6 +650,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name: string
+          updated_at?: string | null
         }
         Update: {
           concept_id?: string | null
@@ -596,6 +658,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           name?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -606,6 +669,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      supplier_agreements: {
+        Row: {
+          agreement_type: string
+          created_at: string | null
+          id: string
+          ip_address: string | null
+          signature_data: Json | null
+          signed_at: string | null
+          supplier_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          agreement_type: string
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          signature_data?: Json | null
+          signed_at?: string | null
+          supplier_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          agreement_type?: string
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          signature_data?: Json | null
+          signed_at?: string | null
+          supplier_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       supplier_bank_accounts: {
         Row: {
@@ -669,6 +765,144 @@ export type Database = {
           },
         ]
       }
+      supplier_categories: {
+        Row: {
+          category_id: string
+          created_at: string | null
+          id: string
+          is_primary: boolean | null
+          subcategory_id: string
+          supplier_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          category_id: string
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          subcategory_id: string
+          supplier_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          category_id?: string
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          subcategory_id?: string
+          supplier_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      supplier_documents: {
+        Row: {
+          created_at: string | null
+          document_name: string | null
+          document_type: string
+          document_url: string
+          expiry_date: string | null
+          id: string
+          is_required: boolean | null
+          supplier_id: string
+          updated_at: string | null
+          upload_date: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          document_name?: string | null
+          document_type: string
+          document_url: string
+          expiry_date?: string | null
+          id?: string
+          is_required?: boolean | null
+          supplier_id: string
+          updated_at?: string | null
+          upload_date?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          document_name?: string | null
+          document_type?: string
+          document_url?: string
+          expiry_date?: string | null
+          id?: string
+          is_required?: boolean | null
+          supplier_id?: string
+          updated_at?: string | null
+          upload_date?: string | null
+        }
+        Relationships: []
+      }
+      supplier_onboarding: {
+        Row: {
+          completed_stages: Json | null
+          created_at: string | null
+          current_stage: Database["public"]["Enums"]["onboarding_stage"]
+          id: string
+          supplier_id: string
+          updated_at: string | null
+          verification_data: Json | null
+        }
+        Insert: {
+          completed_stages?: Json | null
+          created_at?: string | null
+          current_stage: Database["public"]["Enums"]["onboarding_stage"]
+          id?: string
+          supplier_id: string
+          updated_at?: string | null
+          verification_data?: Json | null
+        }
+        Update: {
+          completed_stages?: Json | null
+          created_at?: string | null
+          current_stage?: Database["public"]["Enums"]["onboarding_stage"]
+          id?: string
+          supplier_id?: string
+          updated_at?: string | null
+          verification_data?: Json | null
+        }
+        Relationships: []
+      }
+      supplier_verifications: {
+        Row: {
+          created_at: string | null
+          document_url: string
+          id: string
+          status: Database["public"]["Enums"]["verification_status"]
+          supplier_id: string
+          updated_at: string | null
+          verification_notes: string | null
+          verification_type: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          document_url: string
+          id?: string
+          status?: Database["public"]["Enums"]["verification_status"]
+          supplier_id: string
+          updated_at?: string | null
+          verification_notes?: string | null
+          verification_type: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          document_url?: string
+          id?: string
+          status?: Database["public"]["Enums"]["verification_status"]
+          supplier_id?: string
+          updated_at?: string | null
+          verification_notes?: string | null
+          verification_type?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       suppliers: {
         Row: {
           business_name: string
@@ -681,6 +915,7 @@ export type Database = {
           is_suspended: boolean
           profile_image: string | null
           tax_id: string
+          updated_at: string | null
         }
         Insert: {
           business_name: string
@@ -693,6 +928,7 @@ export type Database = {
           is_suspended?: boolean
           profile_image?: string | null
           tax_id: string
+          updated_at?: string | null
         }
         Update: {
           business_name?: string
@@ -705,36 +941,49 @@ export type Database = {
           is_suspended?: boolean
           profile_image?: string | null
           tax_id?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
       test_force_migration: {
         Row: {
+          created_at: string | null
           id: string
           name: string | null
+          updated_at: string | null
         }
         Insert: {
+          created_at?: string | null
           id?: string
           name?: string | null
+          updated_at?: string | null
         }
         Update: {
+          created_at?: string | null
           id?: string
           name?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
       test_sync: {
         Row: {
+          created_at: string | null
           id: string
           label: string | null
+          updated_at: string | null
         }
         Insert: {
+          created_at?: string | null
           id?: string
           label?: string | null
+          updated_at?: string | null
         }
         Update: {
+          created_at?: string | null
           id?: string
           label?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -743,18 +992,21 @@ export type Database = {
           created_at: string
           id: string
           product_id: string | null
+          updated_at: string | null
           upsell_id: string | null
         }
         Insert: {
           created_at?: string
           id?: string
           product_id?: string | null
+          updated_at?: string | null
           upsell_id?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           product_id?: string | null
+          updated_at?: string | null
           upsell_id?: string | null
         }
         Relationships: [
@@ -838,7 +1090,24 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      supplier_onboarding_progress: {
+        Row: {
+          completion_percent: number | null
+          current_stage: Database["public"]["Enums"]["onboarding_stage"] | null
+          supplier_id: string | null
+        }
+        Insert: {
+          completion_percent?: never
+          current_stage?: Database["public"]["Enums"]["onboarding_stage"] | null
+          supplier_id?: string | null
+        }
+        Update: {
+          completion_percent?: never
+          current_stage?: Database["public"]["Enums"]["onboarding_stage"] | null
+          supplier_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       check_service_availability: {
@@ -865,7 +1134,16 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      business_type: "sole_proprietor" | "company" | "partnership" | "nonprofit"
+      onboarding_stage:
+        | "identity"
+        | "business"
+        | "docs"
+        | "agreements"
+        | "calendar"
+        | "first_product"
+        | "done"
+      verification_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -992,6 +1270,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      business_type: ["sole_proprietor", "company", "partnership", "nonprofit"],
+      onboarding_stage: [
+        "identity",
+        "business",
+        "docs",
+        "agreements",
+        "calendar",
+        "first_product",
+        "done",
+      ],
+      verification_status: ["pending", "approved", "rejected"],
+    },
   },
 } as const
