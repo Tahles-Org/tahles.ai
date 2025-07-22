@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
-// import tahlesLogo from '@/assets/tahles-logo.png';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -11,9 +11,9 @@ const Header = () => {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <a href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <h1 className="text-2xl font-bold text-primary">תכלס</h1>
-          </a>
+          </Link>
         </div>
 
         {/* Navigation & Search */}
@@ -41,10 +41,10 @@ const Header = () => {
         {/* CTA Buttons */}
         <div className="flex items-center gap-3">
           <Button variant="ghost" className="hidden sm:inline-flex" asChild>
-            <a href="/auth">הרשמה/התחברות</a>
+            <Link to="/auth">הרשמה/התחברות</Link>
           </Button>
-          <Button className="bg-orange-500 hover:bg-orange-600">
-            הצטרף כספק
+          <Button className="bg-orange-500 hover:bg-orange-600" asChild>
+            <Link to="/supplier/register">הצטרף כספק</Link>
           </Button>
         </div>
       </div>

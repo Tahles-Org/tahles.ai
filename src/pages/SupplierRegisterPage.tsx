@@ -1,13 +1,13 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { UserPlus, Building, Phone, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { UserPlus, Building, Phone, Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import Header from '@/components/Header';
 
 const SupplierRegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -144,7 +144,9 @@ const SupplierRegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50" dir="rtl">
+      <Header />
+      
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-lg mx-auto">
           {/* Logo Section */}
@@ -296,7 +298,17 @@ const SupplierRegisterPage = () => {
                   className="w-full h-12 text-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg"
                   disabled={isLoading}
                 >
-                  {isLoading ? "נרשם..." : "הרשמה למערכת"}
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      נרשם...
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      הרשמה למערכת
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                  )}
                 </Button>
                 
                 <p className="text-sm text-gray-600 text-center leading-relaxed">
@@ -315,7 +327,7 @@ const SupplierRegisterPage = () => {
 
           <div className="text-center mt-8">
             <Button variant="link" className="text-gray-600 hover:text-gray-800 text-lg" asChild>
-              <a href="/">← חזרה לעמוד הראשי</a>
+              <Link to="/">← חזרה לעמוד הראשי</Link>
             </Button>
           </div>
         </div>
