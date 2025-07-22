@@ -11,6 +11,8 @@ import AuthPage from "./pages/AuthPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import SupplierRegisterPage from "./pages/SupplierRegisterPage";
 import SupplierOnboardingPage from "./pages/SupplierOnboardingPage";
+import HowItWorksPage from "./pages/HowItWorksPage";
+import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,8 @@ const App = () => (
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/supplier/register" element={<SupplierRegisterPage />} />
           <Route path="/supplier/onboarding/:step" element={<SupplierOnboardingPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

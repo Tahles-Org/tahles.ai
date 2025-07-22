@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 
@@ -68,12 +67,12 @@ const HeroSection = () => {
           </p>
           
           {/* Advanced Search */}
-          <div className="max-w-2xl mx-auto mb-8">
+          <div className="max-w-2xl mx-auto mb-12">
             <div className="relative">
               <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
               <Input
                 type="text"
-                placeholder="חיפוש מונחה - ספקים, שירותים, מחירים ועוד..."
+                placeholder="הפתרון המושלם לאירוע שלכם - במרחק 10 קליקים"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full h-14 pr-12 text-lg bg-white text-black"
@@ -81,12 +80,8 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-lg px-8 py-3 mb-8">
-            חיפוש מתקדם
-          </Button>
-
-          {/* Categories Cards - Only from Supabase Database */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 max-w-5xl mx-auto">
+          {/* Categories Cards - 8 per row on large screens, 4+4 on medium */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 max-w-6xl mx-auto">
             {isLoading ? (
               <div className="col-span-full text-center">טוען קטגוריות פעילות...</div>
             ) : error ? (
@@ -96,7 +91,7 @@ const HeroSection = () => {
             ) : !categories || categories.length === 0 ? (
               <div className="col-span-full text-center">אין קטגוריות פעילות זמינות כרגע</div>
             ) : (
-              categories.map((category) => (
+              categories.slice(0, 16).map((category) => (
                 <a 
                   href={`/category/${category.id}`}
                   key={category.id} 

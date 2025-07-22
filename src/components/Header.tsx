@@ -29,19 +29,22 @@ const Header = () => {
               />
             </div>
             
-            <a href="#how-it-works" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link to="/how-it-works" className="text-muted-foreground hover:text-primary transition-colors">
               איך זה עובד
-            </a>
-            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">
+            </Link>
+            <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
               צור קשר
-            </a>
+            </Link>
           </nav>
         </div>
 
         {/* CTA Buttons */}
         <div className="flex items-center gap-3">
           <Button variant="ghost" className="hidden sm:inline-flex" asChild>
-            <Link to="/auth">הרשמה/התחברות</Link>
+            <Link to="/auth?mode=login">התחברות</Link>
+          </Button>
+          <Button variant="outline" className="hidden sm:inline-flex" asChild>
+            <Link to="/auth?mode=register">הרשמה</Link>
           </Button>
           <Button className="bg-orange-500 hover:bg-orange-600" asChild>
             <Link to="/supplier/register">הצטרף כספק</Link>
