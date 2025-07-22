@@ -51,9 +51,10 @@ const HeroSection = () => {
     });
   }, [categories, error, isLoading]);
 
+  console.log('🎨 HeroSection JSX rendering with categories:', categories?.length || 0);
+  
   return (
     <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-16 lg:py-24">
-      {console.log('🎨 HeroSection JSX rendering with categories:', categories?.length || 0)}
       
       <div className="absolute inset-0 bg-black/20"></div>
       <div className="container mx-auto px-4 relative z-10">
@@ -82,20 +83,32 @@ const HeroSection = () => {
           {/* Categories Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 max-w-6xl mx-auto">
             {isLoading ? (
-              <div className="col-span-full text-center">
-                {console.log('⏳ Showing loading state')}
-                טוען קטגוריות פעילות...
-              </div>
+              (() => {
+                console.log('⏳ Showing loading state');
+                return (
+                  <div className="col-span-full text-center">
+                    טוען קטגוריות פעילות...
+                  </div>
+                );
+              })()
             ) : error ? (
-              <div className="col-span-full text-center text-red-300">
-                {console.log('❌ Showing error state:', error.message)}
-                שגיאה בטעינת קטגוריות: {error.message}
-              </div>
+              (() => {
+                console.log('❌ Showing error state:', error.message);
+                return (
+                  <div className="col-span-full text-center text-red-300">
+                    שגיאה בטעינת קטגוריות: {error.message}
+                  </div>
+                );
+              })()
             ) : !categories || categories.length === 0 ? (
-              <div className="col-span-full text-center">
-                {console.log('📭 Showing empty state')}
-                אין קטגוריות פעילות זמינות כרגע
-              </div>
+              (() => {
+                console.log('📭 Showing empty state');
+                return (
+                  <div className="col-span-full text-center">
+                    אין קטגוריות פעילות זמינות כרגע
+                  </div>
+                );
+              })()
             ) : (
               categories.slice(0, 16).map((category) => {
                 console.log('🏷️ Rendering category:', category.name);

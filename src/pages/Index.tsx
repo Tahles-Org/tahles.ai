@@ -22,7 +22,7 @@ const Index = () => {
     <div className="min-h-screen bg-background" dir="rtl">
       <Header />
       <HeroSection />
-      <CategoriesGrid />
+      <CategoriesGrid categories={[]} isLoading={false} />
       <CategorySliders />
       <HowItWorks />
       <RecommendedSuppliers />

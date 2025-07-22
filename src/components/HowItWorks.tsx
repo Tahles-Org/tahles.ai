@@ -27,9 +27,10 @@ const HowItWorks = () => {
     console.log('✅ HowItWorks component mounted');
   }, []);
 
+  console.log('🎨 HowItWorks JSX rendering');
+  
   return (
     <section className="py-16 bg-blue-50">
-      {console.log('🎨 HowItWorks JSX rendering')}
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">לקוחות בוחרים תכלס כי...</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
