@@ -48,7 +48,7 @@ const SupplierIdentityStep: React.FC<SupplierIdentityStepProps> = ({
       setVerifications(prev => ({ ...prev, phone: true }));
       
       // שמירה ב-supplier_verifications
-      await supabase
+      await (supabase as any)
         .from('supplier_verifications')
         .insert([
           {
@@ -80,7 +80,7 @@ const SupplierIdentityStep: React.FC<SupplierIdentityStepProps> = ({
     if (currentUser?.email_confirmed_at) {
       setVerifications(prev => ({ ...prev, email: true }));
       
-      await supabase
+      await (supabase as any)
         .from('supplier_verifications')
         .insert([
           {
@@ -117,7 +117,7 @@ const SupplierIdentityStep: React.FC<SupplierIdentityStepProps> = ({
       if (uploadError) throw uploadError;
 
       // שמירה ב-supplier_verifications
-      await supabase
+      await (supabase as any)
         .from('supplier_verifications')
         .insert([
           {
@@ -163,7 +163,7 @@ const SupplierIdentityStep: React.FC<SupplierIdentityStepProps> = ({
       setIsLoading(true);
 
       // עדכון שלב ב-supplier_onboarding
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('supplier_onboarding')
         .update({
           current_stage: 'business',

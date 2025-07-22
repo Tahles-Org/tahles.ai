@@ -106,7 +106,7 @@ const SupplierRegisterPage = () => {
         if (supplierError) throw supplierError;
 
         // יצירת רשומה בטבלת supplier_onboarding
-        const { error: onboardingError } = await supabase
+        const { error: onboardingError } = await (supabase as any)
           .from('supplier_onboarding')
           .insert([
             {

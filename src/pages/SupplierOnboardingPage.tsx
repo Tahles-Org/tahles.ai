@@ -28,7 +28,7 @@ const SupplierOnboardingPage = () => {
         setCurrentUser(user);
 
         // שליפת נתוני onboarding
-        const { data: onboarding, error } = await supabase
+        const { data: onboarding, error } = await (supabase as any)
           .from('supplier_onboarding')
           .select('*')
           .eq('supplier_id', user.id)
@@ -47,8 +47,8 @@ const SupplierOnboardingPage = () => {
         setOnboardingData(onboarding);
 
         // בדיקה אם המשתמש בשלב הנכון
-        if (step !== onboarding.current_stage) {
-          navigate(`/supplier/onboarding/${onboarding.current_stage}`);
+        if (step !== (onboarding as any).current_stage) {
+          navigate(`/supplier/onboarding/${(onboarding as any).current_stage}`);
         }
 
       } catch (error) {
@@ -107,8 +107,8 @@ const SupplierOnboardingPage = () => {
           {/* ציר התקדמות */}
           <div className="lg:col-span-1">
             <SupplierProgressIndicator 
-              currentStep={onboardingData.current_stage}
-              completedSteps={onboardingData.completed_stages || []}
+              currentStep={(onboardingData as any).current_stage}
+              completedSteps={(onboardingData as any).completed_stages || []}
             />
           </div>
           
