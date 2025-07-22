@@ -1,11 +1,37 @@
 
 import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import { Search, GraduationCap, Bus, Ticket, MapPin, UtensilsCrossed, Gift, Video } from 'lucide-react';
+
+const categoryIcons = {
+  'הרצאות והכשרות': GraduationCap,
+  'טיולים ואטרקציות': Bus,
+  'כרטיסים לאירועים': Ticket,
+  'לוקיישנים': MapPin,
+  'מזון ומשקאות': UtensilsCrossed,
+  'מתנות ומוצרים': Gift,
+  'שירותי הפקה': Video,
+};
 
 const HeroSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  
+  const { data: categories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('is_active', true)
+        .order('name');
+      
+      if (error) throw error;
+      return data;
+    },
+  });
 
   return (
     <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20 lg:py-32">
@@ -33,9 +59,28 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-lg px-8 py-3">
+          <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-lg px-8 py-3 mb-8">
             התחל לחפש
           </Button>
+
+          {/* Categories Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 max-w-5xl mx-auto">
+            {categories?.map((category) => {
+              const IconComponent = categoryIcons[category.name as keyof typeof categoryIcons] || MapPin;
+              
+              return (
+                <div 
+                  key={category.id} 
+                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer"
+                >
+                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <IconComponent className="w-4 h-4 text-white" />
+                  </div>
+                  <p className="text-xs text-white font-medium">{category.name}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
