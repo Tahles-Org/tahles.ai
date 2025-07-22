@@ -4,7 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, Folder } from 'lucide-react';
+import { Search } from 'lucide-react';
+
+interface CategoryFromDB {
+  id: string;
+  name: string;
+  icon: string;
+}
 
 const HeroSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,19 +18,40 @@ const HeroSection = () => {
   const { data: categories, error, isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const { data: categories } = await supabase.from('categories').select('id, name, icon');
-      console.log('Categories data from Supabase (real-time):', categories);
-      console.log('Total categories found:', categories?.length || 0);
-      return categories;
+      const { data: categories, error } = await supabase
+        .from('categories')
+        .select('id, name, icon')
+        .eq('is_active', true);
+      
+      console.log('Active categories from Supabase (real-time):', categories);
+      console.log('Total active categories found:', categories?.length || 0);
+      
+      if (error) {
+        console.error('Error fetching categories:', error);
+        throw error;
+      }
+      
+      // Verify each category has the required fields and correct icon format
+      categories?.forEach((category, index) => {
+        console.log(`Category ${index + 1}:`, {
+          id: category.id,
+          name: category.name,
+          icon: category.icon,
+          iconType: typeof category.icon
+        });
+      });
+      
+      return categories as CategoryFromDB[];
     },
   });
 
   useEffect(() => {
     if (categories) {
-      console.log('Displaying categories:', categories);
+      console.log('Displaying active categories only:', categories);
+      console.log('Categories are being pulled from Supabase database ONLY - no mock data used');
     }
     if (error) {
-      console.error('Error fetching categories:', error);
+      console.error('Error fetching categories from Supabase:', error);
     }
   }, [categories, error]);
 
@@ -58,21 +85,25 @@ const HeroSection = () => {
             חיפוש מתקדם
           </Button>
 
-          {/* Categories Cards */}
+          {/* Categories Cards - Only from Supabase Database */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 max-w-5xl mx-auto">
             {isLoading ? (
-              <div className="col-span-full text-center">טוען קטגוריות...</div>
+              <div className="col-span-full text-center">טוען קטגוריות פעילות...</div>
+            ) : error ? (
+              <div className="col-span-full text-center text-red-300">
+                שגיאה בטעינת קטגוריות מהדאטה בייס
+              </div>
             ) : !categories || categories.length === 0 ? (
-              <div className="col-span-full text-center">אין קטגוריות זמינות כרגע</div>
+              <div className="col-span-full text-center">אין קטגוריות פעילות זמינות כרגע</div>
             ) : (
               categories.map((category) => (
                 <a 
-                  href={`/category/${encodeURIComponent(category.name)}`}
+                  href={`/category/${category.id}`}
                   key={category.id} 
                   className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer"
                 >
                   <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <Folder className="w-4 h-4 text-white" />
+                    <span className="text-lg">{category.icon}</span>
                   </div>
                   <p className="text-xs text-white font-medium">{category.name}</p>
                 </a>
