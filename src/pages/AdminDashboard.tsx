@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChevronDown, ChevronRight, Folders, ArrowRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, TreeDeciduous, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface Category {
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <Folders className="h-6 w-6 text-primary" />
+            <TreeDeciduous className="h-6 w-6 text-primary" />
             <h1 className="text-3xl font-bold">🗂 עץ המידע של המערכת</h1>
           </div>
           <p className="text-muted-foreground">
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Folders className="h-5 w-5" />
+              <TreeDeciduous className="h-5 w-5" />
               קטגוריות ותתי קטגוריות
             </CardTitle>
           </CardHeader>
