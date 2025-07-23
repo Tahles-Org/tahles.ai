@@ -7,7 +7,6 @@ import { AlertTriangle, RefreshCw } from 'lucide-react';
 interface ErrorBoundaryState {
   hasError: boolean;
   error?: Error;
-  errorInfo?: React.ErrorInfo;
 }
 
 class ErrorBoundary extends React.Component<
@@ -20,44 +19,29 @@ class ErrorBoundary extends React.Component<
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    console.error('🚨 Error boundary caught error:', error);
     return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('🚨 Error boundary details:', {
-      error: error.message,
-      stack: error.stack,
-      componentStack: errorInfo.componentStack
-    });
-    
-    this.setState({
-      error,
-      errorInfo
-    });
+    // Simple error logging without complex operations
+    console.error('Error:', error.message);
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="min-h-screen bg-white flex items-center justify-center p-4">
           <Card className="max-w-lg w-full">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-destructive">
+              <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5" />
                 שגיאה בטעינת הדף
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                אירעה שגיאה בטעינת הדף. אנא נסה לרענן את הדף או לחזור לעמוד הבית.
+              <p>
+                אירעה שגיאה בטעינת הדף. אנא נסה לרענן את הדף.
               </p>
-              
-              {this.state.error && (
-                <div className="bg-muted p-3 rounded-md text-sm">
-                  <strong>שגיאה:</strong> {this.state.error.message}
-                </div>
-              )}
               
               <div className="flex gap-2">
                 <Button 
@@ -67,13 +51,6 @@ class ErrorBoundary extends React.Component<
                 >
                   <RefreshCw className="w-4 h-4 mr-2" />
                   רענן דף
-                </Button>
-                <Button 
-                  onClick={() => window.location.href = '/'} 
-                  variant="outline"
-                  size="sm"
-                >
-                  עמוד הבית
                 </Button>
               </div>
             </CardContent>
