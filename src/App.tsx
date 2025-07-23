@@ -1,16 +1,9 @@
 
-import { HashRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import React from 'react';
+import StaticPage from './StaticPage';
 
-const App = () => {  
-  return (
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="*" element={<Index />} />
-      </Routes>
-    </HashRouter>
-  );
+const App = () => {
+  return <StaticPage />;
 };
 
 export default App;
