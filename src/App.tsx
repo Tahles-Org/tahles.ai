@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import AppHealthCheck from "@/components/AppHealthCheck";
 import Index from "./pages/Index";
 import CategoryPage from "./pages/CategoryPage";
 import SubcategoryPage from "./pages/SubcategoryPage";
@@ -20,38 +19,17 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: (failureCount, error) => {
-        console.log(`🔄 Query retry attempt ${failureCount}:`, error);
-        return failureCount < 3;
-      },
-      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+      retry: 1,
+      retryDelay: 1000,
     },
   },
 });
 
 const App = () => {
-  console.log('🚀 App component rendering');
-  console.log('🔧 Environment details:', {
-    mode: import.meta.env.MODE,
-    dev: import.meta.env.DEV,
-    prod: import.meta.env.PROD,
-    base: import.meta.env.BASE_URL
-  });
-  
-  // Enhanced iframe and security detection
-  console.log('🔒 Security context:', {
-    isInIframe: window !== window.parent,
-    origin: window.location.origin,
-    protocol: window.location.protocol,
-    host: window.location.host,
-    hasParent: !!window.parent
-  });
-  
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <AppHealthCheck />
           <Toaster />
           <Sonner />
           <BrowserRouter>
