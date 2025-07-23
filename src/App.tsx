@@ -31,6 +31,22 @@ const queryClient = new QueryClient({
 
 const App = () => {
   console.log('🚀 App component rendering');
+  console.log('🔧 Environment details:', {
+    mode: import.meta.env.MODE,
+    dev: import.meta.env.DEV,
+    prod: import.meta.env.PROD,
+    base: import.meta.env.BASE_URL
+  });
+  
+  // Enhanced iframe and security detection
+  console.log('🔒 Security context:', {
+    isInIframe: window !== window.parent,
+    origin: window.location.origin,
+    protocol: window.location.protocol,
+    host: window.location.host,
+    hasParent: !!window.parent,
+    sameOrigin: window.location.origin === (window.parent && window.parent.location.origin)
+  });
   
   return (
     <ErrorBoundary>
