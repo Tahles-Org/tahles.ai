@@ -18,6 +18,8 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  console.log('🚀 App started successfully');
+  
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>

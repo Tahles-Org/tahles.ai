@@ -6,6 +6,7 @@ import SimpleHeader from '@/components/SimpleHeader';
 import SimpleHero from '@/components/SimpleHero';
 import SimpleCategoriesGrid from '@/components/SimpleCategoriesGrid';
 import SimpleFooter from '@/components/SimpleFooter';
+import AppHealthCheck from '@/components/AppHealthCheck';
 
 const Index = () => {
   const { data: categories, isLoading, error } = useQuery({
@@ -40,6 +41,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white" dir="rtl">
+      <AppHealthCheck />
       <SimpleHeader />
       <SimpleHero />
       <SimpleCategoriesGrid categories={categories} isLoading={isLoading} />
