@@ -44,8 +44,7 @@ const App = () => {
     origin: window.location.origin,
     protocol: window.location.protocol,
     host: window.location.host,
-    hasParent: !!window.parent,
-    sameOrigin: window.location.origin === (window.parent && window.parent.location.origin)
+    hasParent: !!window.parent
   });
   
   return (
