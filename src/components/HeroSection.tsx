@@ -18,14 +18,21 @@ const HeroSection = () => {
   const { data: categories, error, isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const { data: categories, error } = await supabase
-        .from('categories')
-        .select('id, name, icon')
-        .eq('is_active', true);
-      
-      if (error) throw error;
-      return categories as CategoryFromDB[];
+      try {
+        const { data: categories, error } = await supabase
+          .from('categories')
+          .select('id, name, icon')
+          .eq('is_active', true);
+        
+        if (error) throw error;
+        return categories as CategoryFromDB[];
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+      }
     },
+    retry: 1,
+    staleTime: 1000 * 60 * 5,
   });
   
   return (
@@ -56,15 +63,18 @@ const HeroSection = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 max-w-6xl mx-auto">
             {isLoading ? (
               <div className="col-span-full text-center">
-                טוען קטגוריות...
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                <p className="mt-2">טוען קטגוריות...</p>
               </div>
             ) : error ? (
               <div className="col-span-full text-center text-red-300">
-                שגיאה בטעינת קטגוריות
+                <p>שגיאה בטעינת קטגוריות</p>
+                <p className="text-sm mt-1">נסה לרענן את הדף</p>
               </div>
             ) : !categories || categories.length === 0 ? (
               <div className="col-span-full text-center">
-                אין קטגוריות זמינות
+                <p>אין קטגוריות זמינות כרגע</p>
+                <p className="text-sm mt-1">נסה שוב מאוחר יותר</p>
               </div>
             ) : (
               categories.slice(0, 16).map((category) => (
@@ -74,7 +84,7 @@ const HeroSection = () => {
                   className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer"
                 >
                   <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-lg">{category.icon}</span>
+                    <span className="text-lg">{category.icon || '📁'}</span>
                   </div>
                   <p className="text-xs text-white font-medium">{category.name}</p>
                 </Link>
