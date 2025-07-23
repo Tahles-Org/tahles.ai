@@ -1,50 +1,35 @@
 
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import SimpleHeader from '@/components/SimpleHeader';
 import SimpleHero from '@/components/SimpleHero';
-import SimpleCategoriesGrid from '@/components/SimpleCategoriesGrid';
 import SimpleFooter from '@/components/SimpleFooter';
-import AppHealthCheck from '@/components/AppHealthCheck';
+
+// Temporary static categories for immediate deployment
+const mockCategories = [
+  { id: '1', name: 'מכוניות', icon: '🚗', is_active: true },
+  { id: '2', name: 'נדל״ן', icon: '🏠', is_active: true },
+  { id: '3', name: 'שירותים', icon: '🛠️', is_active: true },
+  { id: '4', name: 'אוכל', icon: '🍕', is_active: true },
+];
 
 const Index = () => {
-  const { data: categories, isLoading, error } = useQuery({
-    queryKey: ['categories-simple'],
-    queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from('categories')
-          .select('id, name, icon, is_active')
-          .eq('is_active', true);
-        
-        if (error) throw error;
-        return data || [];
-      } catch (err) {
-        console.error('Categories fetch error:', err);
-        return [];
-      }
-    },
-  });
-  
-  if (error) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-4">תכלס</h1>
-          <p className="text-gray-600 mb-4">פלטפורמת הספקים הגדולה בישראל</p>
-          <p className="text-sm text-gray-500">טוען נתונים...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-white" dir="rtl">
-      <AppHealthCheck />
       <SimpleHeader />
       <SimpleHero />
-      <SimpleCategoriesGrid categories={categories} isLoading={isLoading} />
+      <div className="py-16 px-4">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">הקטגוריות שלנו</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {mockCategories.map((category) => (
+              <div key={category.id} className="text-center p-6 border rounded-lg hover:shadow-lg transition-shadow">
+                <div className="text-4xl mb-4">{category.icon}</div>
+                <h3 className="text-lg font-semibold">{category.name}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
       <SimpleFooter />
     </div>
   );
